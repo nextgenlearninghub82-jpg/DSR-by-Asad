@@ -256,22 +256,6 @@
       padding-bottom: 0.8rem;
     }
 
-    /* Embedded Free Chatbot Container */
-    .embed-chatbot-wrapper {
-      width: 100%;
-      height: 550px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--glass-border);
-      background: rgba(0, 0, 0, 0.4);
-    }
-
-    .embed-chatbot-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
     /* Book Interface View */
     .book-wrapper {
       perspective: 1200px;
@@ -451,7 +435,7 @@
       <div class="nav-card" onclick="openOption('chatbot-section')">
         <div class="icon-box"><i class="fa-solid fa-robot"></i></div>
         <h3>Asad's AI Assistant</h3>
-        <p>Zero API Key required! Hosted AI model for instant CAF-03 assistance.</p>
+        <p>Zero API Key required! Access free AI tools for instant CAF-03 assistance.</p>
       </div>
 
       <div class="nav-card" onclick="openOption('summary-section')">
@@ -473,15 +457,30 @@
       </div>
     </div>
 
-    <!-- SECTION 1: EMBEDDED NO-KEY AI CHATBOT -->
+    <!-- SECTION 1: AI CHATBOT LAUNCHER -->
     <div id="chatbot-section" class="content-section">
       <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
       <div class="section-title">
         <span><i class="fa-solid fa-robot"></i> Asad's AI Assistant</span>
       </div>
-      <div class="embed-chatbot-wrapper">
-        <!-- Free hosted HuggingChat iframe. Replace URL below with your Chatbase/Coze bot link if desired. -->
-        <iframe src="https://huggingface.co/chat/" title="AI Assistant"></iframe>
+      
+      <div style="text-align: center; padding: 3rem 1rem;">
+        <div style="font-size: 4rem; color: var(--primary-neon); margin-bottom: 1rem;">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <h2 style="color: #fff; margin-bottom: 0.5rem;">Launch Free AI Assistant</h2>
+        <p style="color: #a0aec0; max-width: 500px; margin: 0 auto 2rem auto;">
+          Access open-source AI models for ICAP CAF-03 preparation without any API key limits.
+        </p>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+          <a href="https://huggingface.co/chat/" target="_blank" class="action-btn btn-call" style="text-decoration: none;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open HuggingChat
+          </a>
+          <a href="https://chatgpt.com/" target="_blank" class="action-btn btn-whatsapp" style="text-decoration: none; background: #10a37f; box-shadow: 0 0 15px rgba(16, 163, 127, 0.4);">
+            <i class="fa-solid fa-bolt"></i> Open ChatGPT Free
+          </a>
+        </div>
       </div>
     </div>
 
@@ -654,4 +653,3 @@
   </script>
 </body>
 </html>
-1
