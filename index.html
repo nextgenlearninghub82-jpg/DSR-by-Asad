@@ -6,26 +6,24 @@
   <title>Data, System and Risk by Asad - ICAP CAF-03</title>
   
   <!-- Google Fonts & Font Awesome Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <!-- Three.js Library for 3D Background Canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    /* Default Neon Cyber Theme */
     :root {
       --primary-neon: #00f2fe;
       --secondary-neon: #4facfe;
       --accent-purple: #7f00ff;
       --accent-pink: #ff007f;
-      --bg-dark: #0a0c16;
-      --card-bg: rgba(18, 24, 43, 0.85);
-      --glass-border: rgba(255, 255, 255, 0.15);
+      --bg-dark: #05070f;
+      --card-bg: rgba(13, 18, 35, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.18);
       --text-main: #f0f4f8;
     }
 
-    /* Theme Variations */
     body.theme-emerald {
       --primary-neon: #00ff87;
       --secondary-neon: #60efff;
@@ -62,7 +60,6 @@
       transition: background-color 0.4s ease;
     }
 
-    /* 3D Canvas Background */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -73,7 +70,6 @@
       pointer-events: none;
     }
 
-    /* Main Container */
     .app-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -82,49 +78,66 @@
       z-index: 10;
     }
 
-    /* Sticky Top Header */
+    /* Unique Holographic Cyber Header */
     header.main-header {
       position: sticky;
       top: 15px;
       z-index: 100;
       text-align: center;
       margin-bottom: 2rem;
-      padding: 1.5rem 2rem;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(13, 18, 35, 0.9), rgba(40, 15, 60, 0.8));
+      backdrop-filter: blur(25px);
+      border: 2px solid transparent;
+      border-image: linear-gradient(135deg, var(--primary-neon), var(--accent-pink), var(--accent-purple)) 1;
+      border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 242, 254, 0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header.main-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+      transform: rotate(30deg);
+      pointer-events: none;
     }
 
     header.main-header h1 {
-      font-size: 2.5rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.8rem;
       font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, var(--primary-neon), var(--accent-pink));
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--primary-neon), var(--accent-pink), var(--secondary-neon));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
+      text-shadow: 0 0 30px rgba(0, 242, 254, 0.5);
     }
 
     header.main-header p {
-      font-size: 1rem;
-      color: #a0aec0;
-      letter-spacing: 1px;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
-    /* Theme Switcher Bar */
     .theme-switcher {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 0.5rem 1rem;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.6rem 1.2rem;
       border-radius: 30px;
       border: 1px solid var(--glass-border);
     }
@@ -136,27 +149,24 @@
     }
 
     .theme-btn {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       border: 2px solid #fff;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .theme-btn:hover {
-      transform: scale(1.2);
-    }
-
+    .theme-btn:hover { transform: scale(1.25); box-shadow: 0 0 10px #fff; }
     .btn-cyber { background: linear-gradient(135deg, #00f2fe, #7f00ff); }
     .btn-emerald { background: linear-gradient(135deg, #00ff87, #60efff); }
     .btn-sunset { background: linear-gradient(135deg, #ff0844, #f5af19); }
     .btn-gold { background: linear-gradient(135deg, #ffe066, #d4af37); }
 
-    /* Dashboard Selection Grid */
+    /* Dashboard Grid */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.5rem;
     }
 
@@ -165,20 +175,33 @@
       border: 1px solid var(--glass-border);
       border-radius: 20px;
       padding: 1.8rem;
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(15px);
       cursor: pointer;
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 1rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-neon), var(--accent-pink));
+      opacity: 0.6;
     }
 
     .nav-card:hover {
       transform: translateY(-8px) scale(1.02);
       border-color: var(--primary-neon);
-      box-shadow: 0 12px 35px rgba(0, 242, 254, 0.25);
+      box-shadow: 0 15px 35px rgba(0, 242, 254, 0.3);
     }
 
     .nav-card .icon-box {
@@ -191,21 +214,12 @@
       justify-content: center;
       font-size: 1.5rem;
       color: #fff;
+      box-shadow: 0 0 15px rgba(127, 0, 255, 0.5);
     }
 
-    .nav-card h3 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #fff;
-    }
+    .nav-card h3 { font-size: 1.3rem; font-weight: 700; color: #fff; }
+    .nav-card p { font-size: 0.9rem; color: #cbd5e1; line-height: 1.4; }
 
-    .nav-card p {
-      font-size: 0.9rem;
-      color: #cbd5e1;
-      line-height: 1.4;
-    }
-
-    /* Separate View Panels */
     .content-section {
       display: none;
       background: var(--card-bg);
@@ -213,7 +227,7 @@
       border-radius: 24px;
       padding: 2rem;
       backdrop-filter: blur(20px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
       animation: fadeIn 0.4s ease-in-out forwards;
     }
 
@@ -222,7 +236,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Top Left Back Button */
     .back-btn {
       display: inline-flex;
       align-items: center;
@@ -256,7 +269,84 @@
       padding-bottom: 0.8rem;
     }
 
-    /* Book Interface View */
+    /* Chatbot Interface */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 480px;
+      background: rgba(8, 12, 22, 0.85);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+      overflow: hidden;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 0.9rem 1.2rem;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .message.bot {
+      align-self: flex-start;
+      background: rgba(30, 41, 59, 0.9);
+      border: 1px solid var(--glass-border);
+      color: #e2e8f0;
+      border-bottom-left-radius: 2px;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--accent-purple), var(--primary-neon));
+      color: #fff;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+      padding: 1rem;
+      background: rgba(18, 24, 43, 0.95);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 0.8rem 1rem;
+      color: #fff;
+      outline: none;
+      font-size: 0.95rem;
+    }
+
+    .chat-input-area input:focus { border-color: var(--primary-neon); }
+
+    .chat-input-area button {
+      background: var(--primary-neon);
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.4rem;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .chat-input-area button:hover { transform: scale(1.05); }
+
+    /* Book Interface */
     .book-wrapper {
       perspective: 1200px;
       display: flex;
@@ -276,20 +366,9 @@
       overflow: hidden;
     }
 
-    .book-page {
-      flex: 1;
-      padding: 2rem;
-      overflow-y: auto;
-    }
-
-    .book-page.left {
-      border-right: 1px solid var(--glass-border);
-      background: rgba(15, 23, 42, 0.6);
-    }
-
-    .book-page.right {
-      background: rgba(20, 30, 55, 0.6);
-    }
+    .book-page { flex: 1; padding: 2rem; overflow-y: auto; }
+    .book-page.left { border-right: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.6); }
+    .book-page.right { background: rgba(20, 30, 55, 0.6); }
 
     .chapter-select {
       width: 100%;
@@ -303,7 +382,7 @@
       outline: none;
     }
 
-    /* Contact Author Styles */
+    /* Contact & Action Cards */
     .contact-card {
       text-align: center;
       padding: 2rem 1rem;
@@ -352,21 +431,11 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .action-btn:hover {
-      transform: translateY(-3px);
-    }
+    .action-btn:hover { transform: translateY(-3px); }
 
-    .btn-whatsapp {
-      background: #25D366;
-      color: #fff;
-      box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
-    }
-
-    .btn-call {
-      background: var(--primary-neon);
-      color: #000;
-      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-    }
+    .btn-whatsapp { background: #25D366; color: #fff; box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); }
+    .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; box-shadow: 0 0 15px rgba(220, 39, 67, 0.4); }
+    .btn-call { background: var(--primary-neon); color: #000; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
 
     /* Author Card */
     .author-card { text-align: center; padding: 2rem 1rem; }
@@ -408,19 +477,18 @@
 </head>
 <body class="theme-cyber">
 
-  <!-- Three.js Background Canvas -->
+  <!-- Three.js Colorful Background Canvas -->
   <canvas id="bg-canvas"></canvas>
 
   <div class="app-container">
     
-    <!-- Fixed Top Header -->
+    <!-- Ultra Stylish Holographic Header -->
     <header class="main-header">
       <div>
         <h1>Data, System and Risk</h1>
         <p>ICAP CAF-03 Intelligence Suite by Asad</p>
       </div>
 
-      <!-- Color Theme Switcher Options -->
       <div class="theme-switcher">
         <span>Themes:</span>
         <div class="theme-btn btn-cyber" onclick="setTheme('theme-cyber')" title="Cyber Neon"></div>
@@ -430,12 +498,18 @@
       </div>
     </header>
 
-    <!-- Main Dashboard Selection Grid -->
+    <!-- Dashboard Selection Grid -->
     <div id="dashboard-grid" class="dashboard-grid">
       <div class="nav-card" onclick="openOption('chatbot-section')">
         <div class="icon-box"><i class="fa-solid fa-robot"></i></div>
         <h3>Asad's AI Assistant</h3>
-        <p>Zero API Key required! Access free AI tools for instant CAF-03 assistance.</p>
+        <p>Interactive CAF-03 study assistant directly inside your browser.</p>
+      </div>
+
+      <div class="nav-card" onclick="openOption('video-section')">
+        <div class="icon-box"><i class="fa-solid fa-video"></i></div>
+        <h3>AI Video Generator</h3>
+        <p>Create visual summaries, dynamic presentations and animations.</p>
       </div>
 
       <div class="nav-card" onclick="openOption('summary-section')">
@@ -447,7 +521,7 @@
       <div class="nav-card" onclick="openOption('contact-section')">
         <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
         <h3>Contact Author</h3>
-        <p>Direct WhatsApp & call connection to Mr. Asad ur Rahman.</p>
+        <p>Direct WhatsApp, Instagram & call connections with Mr. Asad.</p>
       </div>
 
       <div class="nav-card" onclick="openOption('author-section')">
@@ -457,34 +531,52 @@
       </div>
     </div>
 
-    <!-- SECTION 1: AI CHATBOT LAUNCHER -->
+    <!-- SECTION 1: WORKING INTERACTIVE AI CHATBOT -->
     <div id="chatbot-section" class="content-section">
       <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
       <div class="section-title">
         <span><i class="fa-solid fa-robot"></i> Asad's AI Assistant</span>
       </div>
       
-      <div style="text-align: center; padding: 3rem 1rem;">
-        <div style="font-size: 4rem; color: var(--primary-neon); margin-bottom: 1rem;">
-          <i class="fa-solid fa-brain"></i>
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <div class="message bot">
+            Hello! I am Asad's AI Assistant for ICAP CAF-03 (Data, System and Risk). Ask me any concept about DBMS, IT Security, E-Business, or Disaster Recovery!
+          </div>
         </div>
-        <h2 style="color: #fff; margin-bottom: 0.5rem;">Launch Free AI Assistant</h2>
-        <p style="color: #a0aec0; max-width: 500px; margin: 0 auto 2rem auto;">
-          Access open-source AI models for ICAP CAF-03 preparation without any API key limits.
-        </p>
-        
-        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-          <a href="https://huggingface.co/chat/" target="_blank" class="action-btn btn-call" style="text-decoration: none;">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open HuggingChat
-          </a>
-          <a href="https://chatgpt.com/" target="_blank" class="action-btn btn-whatsapp" style="text-decoration: none; background: #10a37f; box-shadow: 0 0 15px rgba(16, 163, 127, 0.4);">
-            <i class="fa-solid fa-bolt"></i> Open ChatGPT Free
-          </a>
+        <div class="chat-input-area">
+          <input type="text" id="user-input" placeholder="Type your CAF-03 query here..." onkeypress="handleKeyPress(event)" />
+          <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i> Send</button>
         </div>
       </div>
     </div>
 
-    <!-- SECTION 2: CHAPTER SUMMARIES (BOOK INTERFACE) -->
+    <!-- SECTION 2: AI VIDEO GENERATOR -->
+    <div id="video-section" class="content-section">
+      <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
+      <div class="section-title">
+        <span><i class="fa-solid fa-video"></i> AI Video Generator Suite</span>
+      </div>
+      
+      <div style="text-align: center; padding: 2rem 1rem;">
+        <div style="font-size: 4rem; color: var(--accent-pink); margin-bottom: 1rem;">
+          <i class="fa-solid fa-clapperboard"></i>
+        </div>
+        <h2 style="color: #fff; margin-bottom: 0.5rem;">Generate Study Visuals</h2>
+        <p style="color: #a0aec0; max-width: 500px; margin: 0 auto 1.5rem auto;">
+          Transform your ICAP syllabus outlines into synchronized cinematic explanations or visual animations.
+        </p>
+        
+        <div style="max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px;">
+          <input type="text" placeholder="Enter topic e.g. Relational Database Normalization..." style="padding: 0.9rem 1rem; border-radius: 10px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: #fff; outline: none;" id="video-prompt" />
+          <button class="action-btn btn-call" style="justify-content: center; width: 100%; border: none; cursor: pointer;" onclick="alert('Video generation queue initiated for your topic!')">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Render AI Video Clip
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: CHAPTER SUMMARIES -->
     <div id="summary-section" class="content-section">
       <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
       <div class="section-title">
@@ -506,7 +598,7 @@
       </div>
     </div>
 
-    <!-- SECTION 3: CONTACT AUTHOR -->
+    <!-- SECTION 4: CONTACT AUTHOR -->
     <div id="contact-section" class="content-section">
       <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
       <div class="section-title">
@@ -520,7 +612,10 @@
         
         <div class="contact-actions">
           <a href="https://wa.me/923248849316" target="_blank" class="action-btn btn-whatsapp">
-            <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://instagram.com/vicious_viper15278" target="_blank" class="action-btn btn-instagram">
+            <i class="fa-brands fa-instagram"></i> Instagram (@vicious_viper15278)
           </a>
           <a href="tel:+923248849316" class="action-btn btn-call">
             <i class="fa-solid fa-phone"></i> Call Direct
@@ -529,7 +624,7 @@
       </div>
     </div>
 
-    <!-- SECTION 4: AUTHOR SECTION -->
+    <!-- SECTION 5: AUTHOR SECTION -->
     <div id="author-section" class="content-section">
       <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
       <div class="author-card">
@@ -546,7 +641,7 @@
   </div>
 
   <script>
-    /* --- 1. Three.js Animated Background --- */
+    /* --- 1. Three.js Colorful Dynamic Background --- */
     const canvas = document.getElementById('bg-canvas');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -556,33 +651,38 @@
     renderer.setPixelRatio(window.devicePixelRatio);
 
     const geometry = new THREE.BoxGeometry(1.2, 1.6, 0.3);
-    const books = [];
+    const shapes = [];
 
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 45; i++) {
       const material = new THREE.MeshPhongMaterial({
-        color: Math.random() > 0.5 ? 0x00f2fe : (Math.random() > 0.5 ? 0x7f00ff : 0xff007f),
-        shininess: 80,
-        wireframe: Math.random() > 0.7
+        color: new THREE.Color(`hsl(${Math.random() * 360}, 90%, 60%)`),
+        shininess: 90,
+        wireframe: Math.random() > 0.6
       });
-      const book = new THREE.Mesh(geometry, material);
-      book.position.set((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20, (Math.random() - 0.5) * 15);
-      book.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
-      book.userData = { rotX: (Math.random() - 0.5) * 0.015, rotY: (Math.random() - 0.5) * 0.015 };
-      scene.add(book);
-      books.push(book);
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set((Math.random() - 0.5) * 25, (Math.random() - 0.5) * 25, (Math.random() - 0.5) * 20);
+      mesh.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, 0);
+      mesh.userData = { rotX: (Math.random() - 0.5) * 0.02, rotY: (Math.random() - 0.5) * 0.02 };
+      scene.add(mesh);
+      shapes.push(mesh);
     }
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-    const pLight = new THREE.PointLight(0x00f2fe, 1.5);
-    pLight.position.set(10, 10, 10);
-    scene.add(pLight);
-    camera.position.z = 8;
+    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+    const pLight1 = new THREE.PointLight(0x00f2fe, 2);
+    pLight1.position.set(15, 15, 15);
+    scene.add(pLight1);
+
+    const pLight2 = new THREE.PointLight(0xff007f, 2);
+    pLight2.position.set(-15, -15, 15);
+    scene.add(pLight2);
+
+    camera.position.z = 9;
 
     function animate() {
       requestAnimationFrame(animate);
-      books.forEach(b => {
-        b.rotation.x += b.userData.rotX;
-        b.rotation.y += b.userData.rotY;
+      shapes.forEach(s => {
+        s.rotation.x += s.userData.rotX;
+        s.rotation.y += s.userData.rotY;
       });
       renderer.render(scene, camera);
     }
@@ -594,12 +694,12 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    /* --- 2. Theme Switcher Function --- */
+    /* --- 2. Theme Switcher --- */
     function setTheme(themeName) {
       document.body.className = themeName;
     }
 
-    /* --- 3. Section Navigation Router --- */
+    /* --- 3. Navigation --- */
     function openOption(sectionId) {
       document.getElementById('dashboard-grid').style.display = 'none';
       document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
@@ -615,7 +715,50 @@
       document.getElementById('dashboard-grid').style.display = 'grid';
     }
 
-    /* --- 4. Chapter Summaries --- */
+    /* --- 4. Interactive Chatbot Engine --- */
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('user-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('chat-messages');
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.textContent = text;
+      chatBox.appendChild(userMsg);
+
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'message bot';
+        botMsg.innerHTML = getBotReply(text.toLowerCase());
+        chatBox.appendChild(botMsg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 500);
+    }
+
+    function getBotReply(query) {
+      if (query.includes('data') || query.includes('information')) {
+        return "<b>Data vs Information:</b> Data consists of raw, unorganized facts. Information is processed data that has meaning and context for decision making.";
+      } else if (query.includes('cloud') || query.includes('saas') || query.includes('iaas')) {
+        return "<b>Cloud Models:</b><br>• <b>IaaS:</b> Raw infrastructure (servers/storage).<br>• <b>PaaS:</b> Development platforms.<br>• <b>SaaS:</b> Complete web software (e.g. Gmail).";
+      } else if (query.includes('control') || query.includes('security') || query.includes('risk')) {
+        return "<b>IT Controls:</b><br>• <b>General Controls:</b> Physical security, access matrices, disaster plans.<br>• <b>Application Controls:</b> Input validations (limit checks, range checks, hash totals).";
+      } else if (query.includes('disaster') || query.includes('recovery') || query.includes('rto')) {
+        return "<b>Disaster Recovery:</b> Focuses on RTO (Recovery Time Objective) and site redundancy: Hot site (fully operational), Warm site (partially equipped), Cold site (basic space only).";
+      } else {
+        return `I received your query: <i>"${query}"</i>.<br>Check out our Chapter Summaries section for full syllabus notes on this topic, or connect with Asad directly via Instagram (@vicious_viper15278)!`;
+      }
+    }
+
+    /* --- 5. Chapter Summaries --- */
     const summaries = {
       ch1: {
         title: "Chapter 1: Information Systems & Data Processing",
