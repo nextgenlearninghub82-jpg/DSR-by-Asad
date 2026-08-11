@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Data, System and Risk - ICAP CAF-03 by Asad</title>
+  <title>Data, System and Risk by Asad - ICAP CAF-03</title>
   
   <!-- Google Fonts & Font Awesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- Three.js Library for 3D Floating Books Background -->
+  <!-- Three.js Library for 3D Background Canvas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
@@ -38,6 +38,7 @@
       min-height: 100vh;
     }
 
+    /* 3D Canvas Background */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -48,66 +49,49 @@
       pointer-events: none;
     }
 
+    /* Main Container */
     .app-container {
-      max-width: 1300px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 1.5rem;
       position: relative;
       z-index: 10;
     }
 
-    /* Fixed Top Header */
+    /* Sticky Top Header */
     header.main-header {
+      position: sticky;
+      top: 15px;
+      z-index: 100;
       text-align: center;
       margin-bottom: 2rem;
-      padding: 2rem;
+      padding: 1.5rem 2rem;
       background: var(--card-bg);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
 
     header.main-header h1 {
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 2px;
       background: linear-gradient(135deg, var(--primary-neon), var(--accent-pink), #ffeb3b);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+      text-shadow: 0 0 25px rgba(0, 242, 254, 0.3);
     }
 
     header.main-header p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #a0aec0;
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
+      letter-spacing: 1px;
     }
 
-    /* API Key Bar */
-    .api-key-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 1rem;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 0.6rem 1rem;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-    }
-
-    .api-key-container input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-family: 'Fira Code', monospace;
-      outline: none;
-      font-size: 0.9rem;
-    }
-
-    /* Dashboard Options Grid */
+    /* Dashboard Selection Grid */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -199,7 +183,7 @@
     }
 
     .section-title {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 800;
       margin-bottom: 1.5rem;
       display: flex;
@@ -210,11 +194,11 @@
       padding-bottom: 0.8rem;
     }
 
-    /* Chatbot Box */
+    /* 1. Asad's Chatbot View */
     .chat-box {
       display: flex;
       flex-direction: column;
-      height: 520px;
+      height: 500px;
     }
 
     .chat-messages {
@@ -233,7 +217,7 @@
       max-width: 85%;
       padding: 1rem 1.2rem;
       border-radius: 18px;
-      font-size: 1rem;
+      font-size: 0.98rem;
       line-height: 1.5;
       white-space: pre-wrap;
     }
@@ -288,18 +272,18 @@
       box-shadow: 0 0 15px var(--primary-neon);
     }
 
-    /* Book Opening Interface */
+    /* 2. Book Interface View */
     .book-wrapper {
       perspective: 1200px;
       display: flex;
       justify-content: center;
-      padding: 1rem 0;
+      padding: 0.5rem 0;
     }
 
     .book-container {
       width: 100%;
       max-width: 900px;
-      min-height: 480px;
+      min-height: 450px;
       background: #0d1322;
       border-radius: 16px;
       border: 2px solid var(--primary-neon);
@@ -332,9 +316,10 @@
       border: 1px solid var(--glass-border);
       margin-bottom: 1rem;
       font-size: 1rem;
+      outline: none;
     }
 
-    /* Video Studio */
+    /* 3. NotebookLM Video Generator View */
     .studio-box {
       display: flex;
       flex-direction: column;
@@ -351,11 +336,12 @@
       color: #fff;
       font-size: 1rem;
       resize: vertical;
+      outline: none;
     }
 
     .video-preview-card {
       width: 100%;
-      height: 260px;
+      height: 240px;
       background: #000;
       border-radius: 16px;
       display: flex;
@@ -365,15 +351,15 @@
       border: 1px dashed var(--glass-border);
     }
 
-    /* Author Card */
+    /* 4. Author Card View */
     .author-card {
       text-align: center;
       padding: 2.5rem 1rem;
     }
 
     .author-avatar {
-      width: 130px;
-      height: 130px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       margin: 0 auto 1.5rem auto;
       background: linear-gradient(135deg, var(--accent-purple), var(--primary-neon));
@@ -387,7 +373,7 @@
     }
 
     .author-name {
-      font-size: 2.5rem;
+      font-size: 2.3rem;
       font-weight: 900;
       margin-bottom: 1rem;
       background: linear-gradient(135deg, #fff, var(--primary-neon));
@@ -419,47 +405,41 @@
 </head>
 <body>
 
-  <!-- Three.js Canvas -->
+  <!-- Three.js Background Canvas -->
   <canvas id="bg-canvas"></canvas>
 
   <div class="app-container">
     
-    <!-- Permanent Header -->
+    <!-- Fixed Top Header -->
     <header class="main-header">
       <h1>Data, System and Risk</h1>
       <p>ICAP CAF-03 Intelligence Suite by Asad</p>
-      
-      <!-- Gemini API Key Input -->
-      <div class="api-key-container">
-        <i class="fa-solid fa-key" style="color: var(--primary-neon)"></i>
-        <input type="password" id="gemini-key" placeholder="Enter Gemini API Key (Required for live AI responses)" />
-      </div>
     </header>
 
-    <!-- Main Options Grid -->
+    <!-- Main Dashboard Selection Grid -->
     <div id="dashboard-grid" class="dashboard-grid">
       <div class="nav-card" onclick="openOption('chatbot-section')">
         <div class="icon-box"><i class="fa-solid fa-robot"></i></div>
         <h3>Asad's Chatbot</h3>
-        <p>Live Gemini AI automated responses for all your CAF-03 queries.</p>
+        <p>Live Gemini AI responses for all your CAF-03 queries.</p>
       </div>
 
       <div class="nav-card" onclick="openOption('summary-section')">
         <div class="icon-box"><i class="fa-solid fa-book-open"></i></div>
         <h3>Summary of Every Chapter</h3>
-        <p>Interactive book-opening interface with concise syllabus notes.</p>
+        <p>Interactive book-style interface with concise syllabus notes.</p>
       </div>
 
       <div class="nav-card" onclick="openOption('studio-section')">
         <div class="icon-box"><i class="fa-solid fa-clapperboard"></i></div>
         <h3>Create Video from Prompt</h3>
-        <p>NotebookLM-style concept script and video generator.</p>
+        <p>NotebookLM-style concept script and video generator studio.</p>
       </div>
 
       <div class="nav-card" onclick="openOption('author-section')">
         <div class="icon-box"><i class="fa-solid fa-user-ninja"></i></div>
         <h3>About Author</h3>
-        <p>Developer credentials and project creator profile.</p>
+        <p>Developer profiles, credentials & project lead information.</p>
       </div>
     </div>
 
@@ -470,11 +450,11 @@
       <div class="chat-box">
         <div class="chat-messages" id="chat-messages">
           <div class="chat-bubble bot">
-            Hello! I am <strong>Asad's Chatbot</strong>. Powered by Gemini AI, I can dynamically answer any question regarding ICAP CAF-03 Data, Systems, and Risk!
+            Hello! I am <strong>Asad's Chatbot</strong>. Ask me any question regarding ICAP CAF-03 (Data, Systems, and Risk) and I will respond instantly!
           </div>
         </div>
         <div class="chat-input-area">
-          <input type="text" id="chat-input" placeholder="Ask any question..." onkeypress="handleKeyPress(event)" />
+          <input type="text" id="chat-input" placeholder="Ask any CAF-03 question..." onkeypress="handleKeyPress(event)" />
           <button class="btn-send" onclick="sendMessage()">SEND</button>
         </div>
       </div>
@@ -487,7 +467,7 @@
       <select class="chapter-select" id="chapter-select" onchange="loadChapterSummary()">
         <option value="ch1">Chapter 1: Information Systems & Data Processing</option>
         <option value="ch2">Chapter 2: E-Business & Cloud Architecture</option>
-        <option value="ch3">Chapter 3: Database Management Systems & Big Data</option>
+        <option value="ch3">Chapter 3: Database Systems & Big Data Analytics</option>
         <option value="ch4">Chapter 4: IT Security Controls & Cyber Risks</option>
         <option value="ch5">Chapter 5: Business Continuity & Disaster Recovery</option>
       </select>
@@ -505,13 +485,13 @@
       <button class="back-btn" onclick="closeOption()"><i class="fa-solid fa-arrow-left"></i> Back to Dashboard</button>
       <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Video & Topic Studio</h2>
       <div class="studio-box">
-        <textarea id="video-prompt" placeholder="Enter topic to generate video overview..."></textarea>
+        <textarea id="video-prompt" placeholder="Enter topic prompt (e.g., Explain SQL vs NoSQL or IT General Controls) to generate NotebookLM style script..."></textarea>
         <button class="btn-send" style="padding: 1rem; align-self: flex-start;" onclick="generateVideo()">
           <i class="fa-solid fa-play"></i> Generate Video Overview
         </button>
         <div class="video-preview-card" id="video-preview">
           <i class="fa-solid fa-film" style="font-size: 3rem; color: var(--primary-neon);"></i>
-          <p id="video-status" style="color: #94a3b8; margin-top: 1rem;">Enter prompt to synthesize video.</p>
+          <p id="video-status" style="color: #94a3b8; margin-top: 1rem;">Enter prompt above to synthesize media.</p>
         </div>
       </div>
     </div>
@@ -533,7 +513,7 @@
   </div>
 
   <script>
-    /* --- 1. Three.js Background --- */
+    /* --- 1. Three.js Background with 3D Floating Elements --- */
     const canvas = document.getElementById('bg-canvas');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -581,7 +561,7 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
 
-    /* --- 2. Interface Router (Option disappear & View open) --- */
+    /* --- 2. Interface Router (Option disappears & View opens) --- */
     function openOption(sectionId) {
       document.getElementById('dashboard-grid').style.display = 'none';
       document.querySelectorAll('.content-section').forEach(sec => sec.style.display = 'none');
@@ -605,13 +585,15 @@
     async function sendMessage() {
       const input = document.getElementById('chat-input');
       const text = input.value.trim();
-      const apiKey = document.getElementById('gemini-key').value.trim();
+
+      // INSERT YOUR GEMINI API KEY BELOW INSIDE THE QUOTES
+      const apiKey = "YOUR_GEMINI_API_KEY_HERE"; 
 
       if (!text) return;
 
-      const chatMessages = document.getElementById('chat-messages');
+      const apiKey = "YOUR_ACTUAL_GEMINI_API_KEY_HERE";
 
-      // User Message Bubble
+      // Add User Bubble
       const userBubble = document.createElement('div');
       userBubble.className = 'chat-bubble user';
       userBubble.innerText = text;
@@ -620,15 +602,15 @@
       input.value = '';
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      // Loading Indicator
+      // Add Loading Bot Bubble
       const botBubble = document.createElement('div');
       botBubble.className = 'chat-bubble bot';
       botBubble.innerText = 'Thinking...';
       chatMessages.appendChild(botBubble);
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
-      if (!apiKey) {
-        botBubble.innerText = "Please enter a valid Gemini API Key in the top header bar to enable dynamic AI responses.";
+      if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE") {
+        botBubble.innerText = "Please paste your Gemini API key on line 324 of index.html to activate automated answers.";
         return;
       }
 
@@ -639,7 +621,7 @@
           body: JSON.stringify({
             contents: [{
               parts: [{
-                text: `You are Asad's Chatbot, an expert AI tutor for ICAP CAF-03 (Data, Systems, and Risk). Answer the following query thoroughly and clearly: ${text}`
+                text: `You are Asad's Chatbot, an expert AI tutor for ICAP CAF-03 (Data, Systems, and Risk). Provide a direct, highly accurate, and clear answer to the query: ${text}`
               }]
             }]
           })
@@ -649,7 +631,7 @@
         if (data.candidates && data.candidates[0].content.parts[0].text) {
           botBubble.innerText = data.candidates[0].content.parts[0].text;
         } else {
-          botBubble.innerText = "Error generating response. Please check your API key.";
+          botBubble.innerText = "Error generating response. Please check the API Key.";
         }
       } catch (err) {
         botBubble.innerText = "Network error while connecting to Gemini AI.";
@@ -662,28 +644,28 @@
     const summaries = {
       ch1: {
         title: "Chapter 1: Information Systems & Data Processing",
-        left: "<h3>1.1 Data vs Information</h3><p>Data consists of raw unprocessed facts. Information is structured, context-driven data utilized for strategic management.</p>",
-        right: "<h3>1.2 Core Attributes</h3><p>Characteristics of quality information: Accurate, Complete, Cost-effective, Relevant, and Timely.</p>"
+        left: "<h3>1.1 Data vs Information</h3><p>Data consists of raw, unorganized facts. Information is structured and processed data used for key decisions.</p>",
+        right: "<h3>1.2 Core Attributes</h3><p>Quality information must be Accurate, Complete, Cost-effective, Relevant, and Timely.</p>"
       },
       ch2: {
         title: "Chapter 2: E-Business & Cloud Architecture",
         left: "<h3>2.1 Cloud Service Models</h3><p>• IaaS (Infrastructure)<br>• PaaS (Platform)<br>• SaaS (Software)</p>",
-        right: "<h3>2.2 E-Commerce Risks</h3><p>Focuses on network vulnerabilities, data encryption, and transactional security protocols.</p>"
+        right: "<h3>2.2 E-Commerce Security</h3><p>Requires robust network defenses, SSL encryption, and transaction authentication.</p>"
       },
       ch3: {
-        title: "Chapter 3: DBMS & Big Data",
-        left: "<h3>3.1 Relational Models</h3><p>Database normalization, foreign keys, and transaction integrity checks.</p>",
+        title: "Chapter 3: DBMS & Big Data Analytics",
+        left: "<h3>3.1 Relational Databases</h3><p>Database normalization, foreign keys, and transaction integrity checks.</p>",
         right: "<h3>3.2 5 V's of Big Data</h3><p>Volume, Velocity, Variety, Veracity, and Value.</p>"
       },
       ch4: {
-        title: "Chapter 4: IT Security Controls",
-        left: "<h3>4.1 General Controls</h3><p>Data center physical security, user privilege matrices, and software change management.</p>",
-        right: "<h3>4.2 Application Controls</h3><p>Input validation (range checks, format checks) and hash totals.</p>"
+        title: "Chapter 4: IT Security Controls & Cyber Risks",
+        left: "<h3>4.1 General Controls</h3><p>Physical security, system authorization matrices, and software change management.</p>",
+        right: "<h3>4.2 Application Controls</h3><p>Input validation (range check, limit check), processing controls, and hash totals.</p>"
       },
       ch5: {
-        title: "Chapter 5: Disaster Recovery Planning",
-        left: "<h3>5.1 Business Impact Analysis</h3><p>Determining Recovery Time Objectives (RTO) and Maximum Allowable Downtime.</p>",
-        right: "<h3>5.2 Recovery Facilities</h3><p>Hot, Warm, and Cold site redundancy comparison.</p>"
+        title: "Chapter 5: Disaster Recovery & Continuity",
+        left: "<h3>5.1 Business Impact Analysis</h3><p>Establishing Recovery Time Objectives (RTO) and Maximum Tolerable Downtime.</p>",
+        right: "<h3>5.2 Recovery Facilities</h3><p>Comparing Hot, Warm, and Cold site redundancy options.</p>"
       }
     };
 
@@ -694,20 +676,20 @@
       document.getElementById('page-right').innerHTML = `${data.right}`;
     }
 
-    /* --- 5. Video Creator --- */
+    /* --- 5. Video Studio --- */
     function generateVideo() {
       const prompt = document.getElementById('video-prompt').value.trim();
       const preview = document.getElementById('video-preview');
 
       if (!prompt) return alert('Enter a prompt first.');
 
-      preview.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin" style="font-size:3rem; color: var(--primary-neon);"></i><p style="margin-top:1rem;">Synthesizing media script for: "${prompt}"...</p>`;
+      preview.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin" style="font-size:3rem; color: var(--primary-neon);"></i><p style="margin-top:1rem;">Generating script for: "${prompt}"...</p>`;
 
       setTimeout(() => {
         preview.innerHTML = `
           <i class="fa-solid fa-circle-check" style="color: #00f2fe; font-size: 3rem;"></i>
-          <h3 style="margin-top:0.8rem;">Video Breakdown Generated</h3>
-          <p style="font-size:0.9rem; color:#cbd5e1; margin-top:0.4rem;">Script compiled and mapped to CAF-03 learning objectives.</p>
+          <h3 style="margin-top:0.8rem;">Video Breakdown Synthesized</h3>
+          <p style="font-size:0.9rem; color:#cbd5e1; margin-top:0.4rem;">Topic script mapped to CAF-03 learning syllabus.</p>
         `;
       }, 1500);
     }
